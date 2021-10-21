@@ -1,0 +1,321 @@
+$blue-helmet: #343448;
+$gray-dark: #80808D;
+$gray: #9999A5;
+$skin-light: #F5C7BF;
+$skin-dark: #ECA496;
+$beard-light: #FF4A01;
+$beard-dark: #DB4517;
+
+@mixin ps {
+  content: "";
+  position: absolute;
+}
+
+@mixin box($w, $h) {
+  width: $w;
+  height: $h;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #c9ebca;
+  margin-top: 50px;
+}
+
+.viking {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.helmet-container {
+  position: relative;
+}
+
+.helmet-addons {
+  position: absolute;
+  z-index: 1;
+  width: 200px;
+
+  &::before {
+    @include ps();
+    border-left: 25px solid transparent;
+    border-right: 50px solid $gray-dark;
+    border-top: 15px solid transparent;
+    border-bottom: 50px solid transparent;
+    left: 50%;
+    top: -10px;
+    transform: translateX(calc(-50% - 37.5px));
+  }
+
+  &::after {
+    @include ps();
+    border-left: 50px solid $gray-dark;
+    border-right: 25px solid transparent;
+    border-top: 15px solid transparent;
+    border-bottom: 50px solid transparent;
+    right: 50%;
+    top: -10px;
+    transform: translateX(calc(50% + 37.5px));
+  }
+}
+
+.horn-circles {
+  position: absolute;
+  width: 100%;
+
+  .inner-horn {
+    position: absolute;
+    @include box(200px, 200px);
+    background-color: transparent;
+    box-shadow: 0px -35px $gray;
+    border-radius: 50%;
+    z-index: -1;
+
+    &:nth-child(1) {
+      transform: rotate(10deg);
+      left: -110px;
+      top: 40px;
+    }
+
+    &:nth-child(2) {
+      transform: rotate(-10deg);
+      right: -110px;
+      top: 40px;
+    }
+  }
+}
+
+.horn-container {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+
+  .horn {
+    position: relative;
+    @include box(40px, 30px);
+    background-color: $gray-dark;
+    margin: 0 10px;
+
+    &:nth-child(1) {
+      transform: rotate(-55deg);
+      top: 20px;
+      left: 3px;
+    }
+
+    &:nth-child(2) {
+      transform: rotate(55deg);
+      top: 20px;
+      right: 3px;
+    }
+  }
+}
+
+.helmet {
+  position: relative;
+  @include box(200px, 100px);
+  background-color: white;
+  border-radius: 100px 100px 0 0;
+  overflow: hidden;
+
+  .main {
+    background-color: $blue-helmet;
+    @include box(100%, 100%);
+  }
+}
+
+.helmet-bottom {
+  position: relative;
+  @include box(200px, 30px);
+  background: $gray-dark;
+  background-image: radial-gradient(20px 20px, $gray, $gray 25%, $gray-dark 25%);
+  background-size: 2.1em;
+  z-index: 1;
+
+  &::before,
+  &::after {
+    @include ps();
+    border-left: 15px solid transparent;
+    border-right: 15px solid $gray-dark;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+  }
+
+  &::before {
+    left: -30px;
+  }
+
+  &::after {
+    right: -30px;
+    transform: scale(-1, 1);
+  }
+}
+
+.face-base {
+  position: relative;
+  @include box(200px, 150px);
+  background: $skin-light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .face-top {
+    display: flex;
+    justify-content: center;
+    perspective: 190px;
+  }
+
+  .sideburn-container {
+    position: relative;
+    width: 30px;
+
+    &.right {
+      transform: scale(-1, 1)
+    }
+
+    .sideburn {
+      @include box(13px, 23px);
+      overflow: hidden;
+
+      .circle {
+        position: relative;
+        @include box(30px, 40px);
+        left: -18px;
+        top: -17px;
+        background-color: $beard-dark;
+        border-radius: 30px;
+      }
+    }
+
+    .ear {
+      position: absolute;
+      background-color: $skin-light;
+      @include box(25px, 25px);
+      border-radius: 50%;
+      z-index: -1;
+      left: -15px;
+      top: 10px;
+
+      &::after {
+        @include ps();
+        @include box(70px, 70px);
+        top: 12px;
+        left: -18px;
+        background-color: $beard-dark;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .eye-container {
+    @include box(50px, 15px);
+    overflow: hidden;
+
+    .eye {
+      position: relative;
+      @include box(80px, 100px);
+      background-color: $skin-dark;
+      border-radius: 50%;
+      bottom: 91px;
+      left: -15px;
+    }
+  }
+
+  .nose-container {
+    position: relative;
+    @include box(40px, 70px);
+    top: -10px;
+    background-color: $skin-dark;
+    transform: rotateX(30deg);
+
+    &::after {
+      @include ps();
+      border-top: 12px solid $skin-dark;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      bottom: -12px;
+    }
+
+    &::before {
+      bottom: -30px;
+      @include ps();
+      @include box(40px, 15px);
+      border-radius: 50%;
+      background-color: $skin-dark;
+    }
+  }
+
+  .face-mid {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    .beard {
+      @include box(120px, 120px);
+      background-color: $beard-light;
+      border-radius: 50%;
+
+      &:nth-child(1) {
+        margin-right: -40px;
+        box-shadow: 25px 35px 0 -10px $beard-dark;
+      }
+
+      &:nth-child(3) {
+        margin-left: -40px;
+        box-shadow: -25px 35px 0 -10px $beard-dark;
+      }
+    }
+
+    .mustache {
+      position: relative;
+      @include box(140px, 90px);
+      top: -10px;
+      border: 20px solid $beard-light;
+      border-radius: 70px 70px 0 0;
+
+      &::after {
+        top: -22px;
+        left: 30px;
+        @include ps();
+        border-top: 12px solid $skin-dark;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+      }
+    }
+  }
+
+  .face-bottom {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    top: -80px;
+
+    .beard-mid {
+      position: relative;
+      @include box(140px, 140px);
+      background-color: $beard-light;
+      border-radius: 50%;
+
+      &::before {
+        @include ps();
+        @include box(70px, 70px);
+        background-color: $beard-light;
+        border-radius: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 19px 28px 0 -10px $beard-dark, -19px 28px 0 -10px $beard-dark;
+      }
+    }
+  }
+}
